@@ -47,6 +47,32 @@ public class PacMan extends JPanel {
     private Image pacmanLeftImage;
     private Image pacmanRightImage;
 
+    //walls: X food: " " skip: 0 
+    //ghosts: r, b, p, o pacman: P
+    private String[] tileMap = {
+        "XXXXXXXXXXXXXXXXXXX",
+        "X        X        X",
+        "X XX XXX X XXX XX X",
+        "X                 X",
+        "X XX X XXXXX X XX X",
+        "X    X       X    X",
+        "XXXX XXXX XXXX XXXX",
+        "OOOX X       X XOOO",
+        "XXXX X XXrXX X XXXX",
+        "O       bpo       O",
+        "XXXX X XXXXX X XXXX",
+        "OOOX X       X XOOO",
+        "XXXX X XXXXX X XXXX",
+        "X        X        X",
+        "X XX XXX X XXX XX X",
+        "X  X     P     X  X",
+        "XX X X XXXXX X X XX",
+        "X    X   X   X    X",
+        "X XXXXXX X XXXXXX X",
+        "X                 X",
+        "XXXXXXXXXXXXXXXXXXX"
+    };
+
     HashSet<Block> walls;
     HashSet<Block> food;
     HashSet<Block> ghosts;
@@ -68,6 +94,44 @@ public class PacMan extends JPanel {
         pacmanLeftImage = new ImageIcon(getClass().getResource("./pacmanLeft.png")).getImage();
         pacmanRightImage = new ImageIcon(getClass().getResource("./pacmanRight.png")).getImage();
 
+    }
+
+    public void loadMap() {
+        walls = new HashSet<Block>();
+        food = new HashSet<Block>();
+        ghosts = new HashSet<Block>();
+
+        for (int r = 0; r < rowCount; r++) {
+            for (int c = 0; c < columnCount; c++) {
+                String row = tileMap[r];
+                char tileMapChar = row.charAt(c);
+
+                int x = c * tileSize;
+                int y = r * tileSize;
+
+                if (tileMapChar == 'X') {
+                    //BLOCK WALL
+                    Block wall = new Block(wallImage, x, y, tileSize, tileSize);
+                    walls.add(wall);
+                } else if (tileMapChar == 'b') {
+                    //blue ghost
+                    Block ghost = new Block(blueGhostImage, x, y, tileSize, tileSize);
+                    ghosts.add(ghost);
+                } else if (tileMapChar == 'r') {
+                    //red ghost
+                    Block ghost = new Block(redGhostImage, x, y, tileSize, tileSize);
+                    ghosts.add(ghost);
+                } else if (tileMapChar == 'p') {
+                    //pink ghost
+                    Block ghost = new Block(pinkGhostImage, x, y, tileSize, tileSize);
+                    ghosts.add(ghost);
+                } else if (tileMapChar == 'o') {
+                    //orange ghost
+                    Block ghost = new Block(orangeGhostImage, x, y, tileSize, tileSize);
+                    ghosts.add(ghost);
+                }
+            }
+        }
     }
 
 }
